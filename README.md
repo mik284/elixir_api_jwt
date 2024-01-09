@@ -16,3 +16,8 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   * Docs: https://hexdocs.pm/phoenix
   * Forum: https://elixirforum.com/c/phoenix-forum
   * Source: https://github.com/phoenixframework/phoenix
+
+
+
+### Docs
+- [Michael Munavu Blog: Authentication in Elixir](https://medium.com/@michaelmunavu83/authenticate-elixir-apis-with-guardian-and-bcrypt-cd47f776f92d)
