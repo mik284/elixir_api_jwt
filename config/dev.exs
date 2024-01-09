@@ -3,7 +3,7 @@ import Config
 # Configure your database
 config :elixir_api_jwt, ElixirApiJwt.Repo,
   username: "postgres",
-  password: "postgres",
+  password: "4479",
   hostname: "localhost",
   database: "elixir_api_jwt_dev",
   stacktrace: true,
