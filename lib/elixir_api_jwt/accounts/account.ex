@@ -14,5 +14,8 @@ defmodule ElixirApiJwt.Accounts.Account do
     account
     |> cast(attrs, [:email, :hash_password])
     |> validate_required([:email, :hash_password])
+    |> unique_constraint(:email)
+    |> validate_format(:email, ~r/@/)
+    |> validate_length(:hash_password, min: 6)
   end
 end
