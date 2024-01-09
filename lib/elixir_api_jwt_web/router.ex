@@ -18,6 +18,7 @@ defmodule ElixirApiJwtWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    resources "/accounts", AccountController, except: [:new, :edit]
   end
 
   # Other scopes may use custom stacks.
