@@ -2,10 +2,10 @@ import Config
 
 # Configure your database
 config :elixir_api_jwt, ElixirApiJwt.Repo,
-  username: "postgres",
-  password: "4479",
+  username: "elixir_auth",
+  password: "elixir_auth",
   hostname: "localhost",
-  database: "elixir_api_jwt_dev",
+  database: "Authentication_Elixir",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
