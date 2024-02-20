@@ -11,7 +11,15 @@ config :elixir_api_jwt,
   ecto_repos: [ElixirApiJwt.Repo],
   generators: [timestamp_type: :utc_datetime]
 
-# Configures the endpoint
+#Guardian configurations
+# config :my_app, MyApp.Guardian,
+#        issuer: "my_app",
+#        secret_key: "Secret key. You can use `mix guardian.gen.secret` to get one"
+
+config :elixir_api_jwt, ElixirApiJwt.Guardian,
+        issuer: "elixir_api_jwt",
+        secret_key: "QD9VOcCfbjIxTjY2J7kjep3gBJm36lqEr1Ytdt1Xnn7iKxL+865l7bemddaGF9v1"
+
 config :elixir_api_jwt, ElixirApiJwtWeb.Endpoint,
   url: [host: "localhost"],
   adapter: Phoenix.Endpoint.Cowboy2Adapter,
