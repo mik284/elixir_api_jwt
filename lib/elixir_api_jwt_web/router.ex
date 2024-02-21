@@ -21,6 +21,11 @@ defmodule ElixirApiJwtWeb.Router do
     resources "/accounts", AccountController, except: [:new, :edit]
   end
 
+  scope "/api", ElixirApiJwtWeb do
+    pipe_through :api
+    post "/accounts/register", AccountController, :create
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", ElixirApiJwtWeb do
   #   pipe_through :api
