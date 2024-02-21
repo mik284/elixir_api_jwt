@@ -1,6 +1,7 @@
 defmodule ElixirApiJwtWeb.AccountController do
   use ElixirApiJwtWeb, :controller
 
+  alias ElixirApiJwt.Guardian
   alias ElixirApiJwt.Accounts
   alias ElixirApiJwt.Accounts.Account
 
@@ -12,11 +13,18 @@ defmodule ElixirApiJwtWeb.AccountController do
   end
 
   def create(conn, %{"account" => account_params}) do
-    with {:ok, %Account{} = account} <- Accounts.create_account(account_params) do
+    # with {:ok, %Account{} = account} <- Accounts.create_account(account_params) do
+    #   conn
+    #   |> put_status(:created)
+    #   |> put_resp_header("location", ~p"/api/accounts/#{account}")
+    #   |> render(:show, account: account)
+    # end
+
+     with {:ok, %Account{} = account} <- Accounts.create_account(account_params),
+         {:ok, token, _full_claims} <- Guardian.encode_and_sign(account) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", ~p"/api/accounts/#{account}")
-      |> render(:show, account: account)
+      |> render("account_token.json", account: account, token: token)
     end
   end
 
@@ -40,4 +48,13 @@ defmodule ElixirApiJwtWeb.AccountController do
       send_resp(conn, :no_content, "")
     end
   end
+
+
+  def render("account_token.json", %{account: account, token: token}) do
+    %{
+      id: account.id,
+      email: account.email,
+      token: token
+    }
+end
 end
