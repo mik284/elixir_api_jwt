@@ -49,6 +49,7 @@ defmodule ElixirApiJwtWeb.AccountController do
     end
   end
 
+  # We check if the user exists and if the password is the same, then we render the user’s id, email and token.
   def sign_in(conn, %{"account" => %{"email" => email, "hash_password" => hash_password}}) do
     case ElixirApiJwt.Guardian.authenticate(email, hash_password) do
       {:ok, account, token} ->

@@ -23,11 +23,15 @@ defmodule ElixirApiJwtWeb.AccountJSON do
     }
   end
 
-   def render("account_token.json", %{account: account, token: token}) do
+  def render("account_token.json", %{account: account, token: token}) do
     %{
       id: account.id,
       email: account.email,
       token: token
     }
-end
+  end
+
+  def render("error.json", %{error: error}) do
+    %{error: error}
+  end
 end
