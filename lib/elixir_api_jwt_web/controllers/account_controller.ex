@@ -20,7 +20,7 @@ defmodule ElixirApiJwtWeb.AccountController do
     #   |> render(:show, account: account)
     # end
 
-     with {:ok, %Account{} = account} <- Accounts.create_account(account_params),
+    with {:ok, %Account{} = account} <- Accounts.create_account(account_params),
          {:ok, token, _full_claims} <- Guardian.encode_and_sign(account) do
       conn
       |> put_status(:created)
@@ -49,6 +49,17 @@ defmodule ElixirApiJwtWeb.AccountController do
     end
   end
 
+  def sign_in(conn, %{"account" => %{"email" => email, "hash_password" => hash_password}}) do
+    case ElixirApiJwt.Guardian.authenticate(email, hash_password) do
+      {:ok, account, token} ->
+        conn
+        |> put_status(:ok)
+        |> render("account_token.json", account: account, token: token)
 
- 
+      {:error, _reason} ->
+        conn
+        |> put_status(:unauthorized)
+        |> render("error.json", error: "invalid credentials")
+    end
+  end
 end
