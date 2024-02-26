@@ -101,4 +101,10 @@ defmodule ElixirApiJwt.Accounts do
   def change_account(%Account{} = account, attrs \\ %{}) do
     Account.changeset(account, attrs)
   end
+
+
+
+  def get_account_by_email(email) do
+    Repo.get_by(Account, email: email)
+  end
 end
