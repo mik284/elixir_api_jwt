@@ -63,4 +63,30 @@ defmodule ElixirApiJwtWeb.AccountController do
         |> render("error.json", error: "invalid credentials")
     end
   end
+
+  def reset_password(conn, %{"account" => account_params}) do
+    case Accounts.get_account_by_email(account_params["email"]) do
+      nil ->
+        conn
+        |> put_status(:unauthorized)
+        |> render("error.json", error: "Email not found")
+
+      account ->
+        case ElixirApiJwt.Guardian.validate_password(
+               account_params["current_password"],
+               account.hash_password
+             ) do
+          true ->
+            with {:ok, %Account{} = account} <- Accounts.update_account(account, account_params),
+                 {:ok, token, _full_claims} <- ElixirApiJwt.Guardian.encode_and_sign(account) do
+              render(conn, "account_token.json", account: account, token: token)
+            end
+
+          false ->
+            conn
+            |> put_status(:unauthorized)
+            |> render("error.json", error: "invalid credentials")
+        end
+    end
+  end
 end
