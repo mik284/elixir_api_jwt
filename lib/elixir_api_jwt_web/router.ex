@@ -25,6 +25,7 @@ defmodule ElixirApiJwtWeb.Router do
     pipe_through :api
     post "/accounts/register", AccountController, :create
     post "/accounts/sign_in", AccountController, :sign_in
+    patch "/accounts/reset_password", AccountController, :reset_password
   end
 
   # Other scopes may use custom stacks.
